@@ -1,3 +1,9 @@
 Briefly explain the vulnerability and why the secure version prevents the vulnerability.
 Which CIA property does tampering violate?
 What additional security mechanisms can you incorporate?
+
+insecure.js directly uses user input to search a database. This allows an attacker to enter database code into a field and have that sent to the database. This could cause the database to return information about it's structure or about a user. secure.js first makes sure that the input is a string rather than a javascript object that could perform some kind of query. Then, it removes all non-alphanumeric characters from the string so that if someone enters code, it will no longer be valid code by the time it makes it to the database. 
+
+Tampering violates the 'integrity' property. This is the property that involves keeping data accurate, and tampering is defined by the unauthorized changing of data. 
+
+You could also make sure to encrypt any sensitive data in the database so that even if an attacker does get access, they can't get any useful information out of the data that they access. And you could run regular automated audits of code and logs to make sure you're not leaking any sensitive data. Finally, you can make sure that only the employees that absolutely need access to a section of a database have that access, minimizing the number of people that could mess up and create info leaks.

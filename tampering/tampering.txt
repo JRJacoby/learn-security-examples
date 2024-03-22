@@ -1,0 +1,3 @@
+In insecure.js, the server directly sends user-entered text in the response. This means that the user can enter arbitrary HTML, including script tags, to the client. These scripts could execute anything. This is called a cross-site scripting attack.
+
+In secure.js, the server first replaces any HTML tag characters with escape sequences so that literal HTML would not be sent back to the client, rendering any entered code useless.
