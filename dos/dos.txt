@@ -1,2 +1,4 @@
 - Briefly explain the vulnerability and why the secure version prevents the vulnerability.
 - What additional security mechanisms can you incorporate to prevent such attacks?
+
+The 'id' field is being used directly without sanitization and there is no error-handling, so someone could submit code that could  crash or infinitely hold up the database and therefore the server, and deny the service to other users. secure.js doesn't introduce any sanitization, but it does more gracefully handle any arbitrary database error, ensuring that the server won't be caught up or crashed because of bad input to the query. As an additional security mechanism, the input really should be sanitized, and you could also probably add some kind of explicit timeout to the response.
