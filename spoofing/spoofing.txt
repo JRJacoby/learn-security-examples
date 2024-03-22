@@ -3,3 +3,15 @@ Briefly explain the vulnerability and why the secure version prevents the vulner
 The secret in insecure.js is hard-coded, meaning that it is exposed to anyone who gets access to the source code, for instance by hacking (or just having regular appropriate access to) a version control system. This would allow an attacker to pretend to be another user by using their session secret (spoofing the session). "httpOnly: false" also allows scripts on the client side to access the cookie and then do anything with it, such as send it to an endpoint controlled by the attacker so they can use it to spoof the session (cross-site scripting attacks).
 
 In secure.js, the session secret is read from the command line, so it's never stored in the code or version control systems anywhere. In addition, httpOnly is set to true so that JavaScript can't access the cookies, and on top of that sameSite is also set to true which means that a cookie is only sned in requests that come from the same site as the cookie. This way, an attacker's website opened during a session for another website can't send a request to the other website and have that request be trusted, because it didn't come from the same site.
+
+Which CIA properties do you think Spoofing violates?
+
+Mainly confidentiality which is about "ensuring that sensitive information is accessible only to authorized individuals or entities". In a spoofing attack, a non-authorized individual pretends to be an authorized individual and then is able to acquire sensitive information that they shouldn't have access to. 
+
+Integrity is relatively unaffected because no data needs to be manipulated or changed - in spoofing, the attacker just uses already-existing data. The problem is more that they get access to data (like a cookie/secret) that they shouldn't have had access to - not so much that they're actually corrupting this data, just using it for a nefarious reason.
+
+Availability also isn't really affected. The authorized user can still access the information that they need to - the problem is more that in addition to an authorized user, there is also an un-authorized user accessing the information. 
+
+Of course once the spoofing is successful, the attacker may then also choose to corrupt or delete data, or to block the real user out of their account, which would then also affect integrity and availability. 
+
+
